@@ -1,0 +1,27 @@
+
+units metal
+atom_style atomic
+
+read_data one.lmp
+
+velocity all create 300 1 loop all
+
+pair_style kim li_gep_s-80-80-one-1
+pair_coeff  * * Li Ge P S
+
+neighbor 0.3 bin
+neigh_modify delay 0 every 2 check no
+
+# minimize 1.0e-4 1.0e-6 1000 1000
+
+thermo 1
+thermo_style custom step pe ke etotal temp press density
+# norm = normalize by # of atoms (yes or no)
+thermo_modify norm no
+
+fix 1 all nve
+
+dump 1 all custom 1 output.lammpstrj id type xu yu zu
+timestep 0.001
+run 20000
+

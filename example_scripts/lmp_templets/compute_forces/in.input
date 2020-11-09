@@ -1,0 +1,18 @@
+units metal
+atom_style atomic
+
+read_data one.lmp
+
+pair_style kim tmp
+pair_coeff  * * Li Ge P S
+
+neighbor       0 bin
+neigh_modify   delay 0 every 1 check yes
+
+timestep 0.001
+fix 1 all nvt temp 300.0 300.0 0.1
+
+dump force all custom 1 f_lammps.txt id fx fy fz
+
+run 0
+ 
